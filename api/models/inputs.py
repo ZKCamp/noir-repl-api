@@ -10,3 +10,9 @@ class CodeInput(BaseModel):
 class ParamInput(BaseModel):
     session_id: str
     inputs: dict
+
+
+class RunInput(BaseModel):
+    session_id: str
+    code: str
+    inputs: dict

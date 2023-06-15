@@ -6,7 +6,7 @@ class CodeOutput(BaseModel):
     code: str
 
 
-class CompilationOutput(BaseModel):
+class RunOutput(BaseModel):
     session_id: str
     output: str
     is_compiled: str

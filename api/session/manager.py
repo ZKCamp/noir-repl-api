@@ -62,3 +62,10 @@ class SessionManager:
         with open(os.path.join(project_dir, "Prover.toml"), "w") as fl:
             fl.truncate(0)
             fl.write(toml_repr)
+
+    def generate_proof(self, identifier):
+        project_name, session_dir, project_dir = self.get_session(identifier)
+
+        ret_code, output = self.shell_ops.prove(project_dir)
+        output = clean_output(output.decode("utf-8"))
+        return ret_code, output
