@@ -7,6 +7,6 @@ class CodeInput(BaseModel):
     code: str
 
 
-class Input(BaseModel):
+class ParamInput(BaseModel):
     session_id: str
-    inputs: Dict
+    inputs: dict

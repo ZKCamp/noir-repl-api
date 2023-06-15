@@ -3,7 +3,7 @@ from api.config import Config
 from session.manager import SessionManager
 from shell.operations import ShellOperations
 
-from models.inputs import CodeInput, Input
+from models.inputs import CodeInput, ParamInput
 from models.outputs import CodeOutput, CompilationOutput
 
 from fastapi.middleware.cors import CORSMiddleware
@@ -30,10 +30,10 @@ async def root():
 
 @app.post("/session/create/{name}")
 async def create_session(name: str):
-    session_manager.create_session(name)
+    session_identifier = session_manager.create_session(name)
 
     return {
-        "message": "Success"
+        "session_id": session_identifier
     }
 
 
@@ -69,7 +69,7 @@ async def compile_code(session_id: str):
 
 
 @app.post("/session/inputs/change")
-async def replace_inputs(inputs: Input):
+async def replace_inputs(inputs: ParamInput):
     input_params = inputs.inputs
     session_id = inputs.session_id
 

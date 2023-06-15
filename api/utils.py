@@ -1,9 +1,10 @@
-import json
-import sys
-import toml
+import re
 
 
-toml_config = toml.dumps(config)
+def clean_output(output):
+    ansi_escape = re.compile(r'\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])')
+    cleaned_output = ansi_escape.sub('', output)
 
-with open(output_file, 'w') as target:
-    target.write(toml_config)
+    cleaned_output = cleaned_output.strip()
+
+    return cleaned_output

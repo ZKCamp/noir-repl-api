@@ -4,6 +4,8 @@ import uuid
 from glob import glob
 import toml
 
+from api.utils import clean_output
+
 
 class SessionManager:
     def __init__(self, config, shell_ops):
@@ -19,6 +21,8 @@ class SessionManager:
             os.mkdir(session_directory)
 
             self.shell_ops.initialise_noir_project(project_name, session_directory)
+
+            return session_identifier
 
         except Exception:
             raise Exception("Failed to create session")
@@ -46,7 +50,7 @@ class SessionManager:
         project_name, session_dir, project_dir = self.get_session(identifier)
 
         ret_code, output = self.shell_ops.compile_code(project_dir)
-        output = output.decode("utf-8")
+        output = clean_output(output.decode("utf-8"))
 
         return ret_code, output
 
