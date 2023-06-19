@@ -12,7 +12,9 @@ RUN curl -L https://raw.githubusercontent.com/noir-lang/noirup/main/install | ba
 
 RUN /root/.nargo/bin/noirup
 
-ENV PATH="/root/.nargo/bin:${PATH}"
+RUN echo 'export PATH="$PATH:/root/.nargo/bin"' >> /root/.bashrc
+
+RUN cat /root/.bashrc
 
 RUN pip install --upgrade pip && pip install -r requirements.txt
 
