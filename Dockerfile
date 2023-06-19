@@ -4,13 +4,13 @@ WORKDIR /app
 
 COPY requirements.txt requirements.txt
 
+COPY install.sh install.sh
+
 RUN apt-get -y install git
 
 RUN pip install --upgrade pip && pip install -r requirements.txt
 
-RUN curl -L https://raw.githubusercontent.com/noir-lang/noirup/main/install | bash
-
-RUN noirup
+RUN ./install.sh
 
 COPY . .
 
