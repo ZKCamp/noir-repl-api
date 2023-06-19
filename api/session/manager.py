@@ -33,8 +33,8 @@ class SessionManager:
 
             return session_identifier, example["code"], example["inputs"]
 
-        except Exception:
-            raise Exception("Failed to create session")
+        except Exception as exp:
+            raise Exception(exp)
 
     def get_session(self, identifier):
         session_dir = glob(f"{self.sessions_dir}/{identifier}__*")[0]
