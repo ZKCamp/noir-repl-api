@@ -37,6 +37,9 @@ class SessionManager:
             raise Exception(exp)
 
     def get_session(self, identifier):
+        print("Sessions Dir")
+        print(glob(f"{self.sessions_dir}/{identifier}__*"))
+
         session_dir = glob(f"{self.sessions_dir}/{identifier}__*")[0]
         project_name = session_dir.split("/")[-1].split("__")[1]
         project_dir = os.path.join(session_dir, project_name)
