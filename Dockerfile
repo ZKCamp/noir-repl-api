@@ -12,7 +12,7 @@ RUN curl -L https://raw.githubusercontent.com/noir-lang/noirup/main/install | ba
 
 RUN /root/.nargo/bin/noirup
 
-RUN cat ~/.bashrc
+RUN ls /root/.nargo/bin
 
 RUN pip install --upgrade pip && pip install -r requirements.txt
 
