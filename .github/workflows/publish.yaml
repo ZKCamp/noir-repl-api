@@ -34,5 +34,5 @@ jobs:
           docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
 
       - name: Deploy
-          run: |
-            aws ecs update-service --cluster noir-repl-api --service noir-repl-api-service --force-new-deployment
+        run: |
+          aws ecs update-service --cluster noir-repl-api --service noir-repl-api-service --force-new-deployment
