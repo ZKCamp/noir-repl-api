@@ -12,7 +12,9 @@ RUN pip install --upgrade pip && pip install -r requirements.txt
 
 RUN curl -L https://raw.githubusercontent.com/noir-lang/noirup/main/install | bash
 
-RUN source /root/.bashrc
+RUN cat /root/.bashrc
+
+RUN . /root/.bashrc
 
 RUN noirup
 
