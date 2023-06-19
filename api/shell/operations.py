@@ -22,6 +22,7 @@ class ShellOperations:
         )
 
         assert (ret_code == 0)
+        return output
 
     def compile_code(self, project_directory):
         command = f"nargo check"

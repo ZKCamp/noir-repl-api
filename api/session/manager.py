@@ -99,3 +99,14 @@ class SessionManager:
         inputs = self.get_session_inputs(project_dir)
 
         return code, inputs
+
+    def test_execution(self):
+        session_identifier = uuid.uuid1()
+        session_dir_name = f"{session_identifier}__hello"
+        session_directory = os.path.join(self.sessions_dir, session_dir_name)
+
+        os.mkdir(session_directory)
+
+        output = self.shell_ops.initialise_noir_project("temp", session_directory)
+        return output
+
