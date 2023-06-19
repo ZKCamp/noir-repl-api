@@ -16,7 +16,7 @@ class ShellOperations:
         return process.returncode, process.stdout, process.stderr
 
     def initialise_noir_project(self, project_name, directory):
-        command = f"nargo new {project_name}"
+        command = f"/root/.nargo/bin/nargo new {project_name}"
         ret_code, output, _ = self._run_command(
             command, cwd=directory
         )
@@ -25,7 +25,7 @@ class ShellOperations:
         return output
 
     def temp_initialise_noir_project(self, project_name, directory):
-        command = f"nargo new {project_name}"
+        command = f"/root/.nargo/bin/nargo new {project_name}"
         ret_code, output, _ = self._run_command(
             command, cwd=directory
         )
