@@ -8,15 +8,11 @@ COPY install.sh install.sh
 
 RUN apt-get -y install git
 
-RUN pip install --upgrade pip && pip install -r requirements.txt
-
 RUN curl -L https://raw.githubusercontent.com/noir-lang/noirup/main/install | bash
 
-RUN cat /root/.bashrc
+RUN /root/.nargo/bin/noirup
 
-RUN . /root/.bashrc
-
-RUN noirup
+RUN pip install --upgrade pip && pip install -r requirements.txt
 
 COPY . .
 
