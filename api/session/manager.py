@@ -107,6 +107,6 @@ class SessionManager:
 
         os.mkdir(session_directory)
 
-        output = self.shell_ops.temp_initialise_noir_project("temp", session_directory)
-        return output
+        output, ret_code = self.shell_ops.temp_initialise_noir_project("temp", session_directory)
+        return output, ret_code
 

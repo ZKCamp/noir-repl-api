@@ -30,7 +30,7 @@ class ShellOperations:
             command, cwd=directory
         )
 
-        return output
+        return output, ret_code
 
     def compile_code(self, project_directory):
         command = f"nargo check"
