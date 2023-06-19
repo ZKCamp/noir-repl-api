@@ -16,3 +16,8 @@ class RunInput(BaseModel):
     session_id: str
     code: str
     inputs: dict
+
+
+class SessionCreationInput(BaseModel):
+    session_type: str
+    name: str

@@ -1,18 +1,23 @@
 import os
 import uuid
 
-from glob import glob
+import json
 import toml
+import yaml
+
+from glob import glob
+from pathlib import Path
 
 from api.utils import clean_output
 
 
 class SessionManager:
     def __init__(self, config, shell_ops):
+        self.examples_config = yaml.safe_load(Path(config.examples_config).read_text())
         self.sessions_dir = config.sessions_dir
         self.shell_ops = shell_ops
 
-    def create_session(self, project_name):
+    def create_session(self, project_name, example_name):
         try:
             session_identifier = uuid.uuid1()
             session_dir_name = f"{session_identifier}__{project_name}"
@@ -22,7 +27,11 @@ class SessionManager:
 
             self.shell_ops.initialise_noir_project(project_name, session_directory)
 
-            return session_identifier
+            example = self.get_example(example_name)
+            self.replace_code(session_identifier, example["code"])
+            self.replace_inputs(session_identifier, json.loads(example["inputs"]))
+
+            return session_identifier, example["code"], example["inputs"]
 
         except Exception:
             raise Exception("Failed to create session")
@@ -63,9 +72,30 @@ class SessionManager:
             fl.truncate(0)
             fl.write(toml_repr)
 
+    def get_session_inputs(self, project_dir):
+        inputs = toml.load(open(os.path.join(project_dir, "Prover.toml")))
+        json_inputs = json.dumps(inputs)
+        return json_inputs
+
     def generate_proof(self, identifier):
         project_name, session_dir, project_dir = self.get_session(identifier)
 
         ret_code, output = self.shell_ops.prove(project_dir)
         output = clean_output(output.decode("utf-8"))
         return ret_code, output
+
+    def get_example_names(self):
+        return [example["name"] for _, example in self.examples_config.items()]
+
+    def get_example(self, example_name):
+        for example in self.examples_config.values():
+            if example["name"] == example_name:
+                return example
+
+    def get_session_info(self, identifier):
+        project_name, session_dir, project_dir = self.get_session(identifier)
+
+        code = self.get_session_code(identifier)
+        inputs = self.get_session_inputs(project_dir)
+
+        return code, inputs

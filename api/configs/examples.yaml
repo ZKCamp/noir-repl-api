@@ -1,0 +1,9 @@
+hello-world:
+  name: "Hello World"
+  code: "fn main(x : Field, y : pub Field) {\n    constrain x != y;\n}"
+  inputs: "{\"x\": 100, \"y\": 50}"
+
+new-world:
+  name: "New World"
+  code: "fn main(x : Field, y : pub Field) {\n    constrain x == y;\n}"
+  inputs: "{\"x\": 100, \"y\": 100}"

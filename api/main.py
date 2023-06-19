@@ -3,7 +3,7 @@ from api.config import Config
 from session.manager import SessionManager
 from shell.operations import ShellOperations
 
-from models.inputs import CodeInput, ParamInput, RunInput
+from models.inputs import CodeInput, ParamInput, RunInput, SessionCreationInput
 from models.outputs import CodeOutput, RunOutput
 
 from fastapi.middleware.cors import CORSMiddleware
@@ -28,12 +28,17 @@ async def root():
     return {"message": f"Welcome to NoirRepl"}
 
 
-@app.post("/session/create/{name}")
-async def create_session(name: str):
-    session_identifier = session_manager.create_session(name)
+@app.post("/session/create")
+async def create_session(session_creation_input: SessionCreationInput):
+    session_identifier, code, inputs = session_manager.create_session(
+        session_creation_input.name,
+        session_creation_input.session_type
+    )
 
     return {
-        "session_id": session_identifier
+        "session_id": session_identifier,
+        "code": code,
+        "inputs": inputs
     }
 
 
@@ -111,3 +116,19 @@ async def generate_proof(session_id: str):
         is_compiled=True if ret_code == 0 else False,
         output=output
     )
+
+
+@app.get("/examples")
+async def get_examples():
+    example_names = session_manager.get_example_names()
+    return example_names
+
+
+@app.get("/session/{session_id}")
+async def get_session_info(session_id: str):
+    code, inputs = session_manager.get_session_info(session_id)
+
+    return {
+        "code": code,
+        "inputs": inputs
+    }
