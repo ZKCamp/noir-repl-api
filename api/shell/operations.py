@@ -1,16 +1,18 @@
 import os
 import subprocess
+import os
 
 
 class ShellOperations:
     def __init__(self):
-        pass
+        self.env = os.environ.copy()
+        custom_path = '/root/.nargo/bin'
+        self.env['PATH'] += os.pathsep + custom_path
 
-    @staticmethod
-    def _run_command(command, cwd):
+    def _run_command(self, command, cwd):
         command = command.split()
         process = subprocess.run(
-            command, capture_output=True, cwd=cwd, check=False
+            command, capture_output=True, cwd=cwd, check=False, env=self.env
         )
 
         return process.returncode, process.stdout, process.stderr
@@ -22,6 +24,7 @@ class ShellOperations:
         )
 
         assert (ret_code == 0)
+        return output
 
     def compile_code(self, project_directory):
         command = f"nargo check"
