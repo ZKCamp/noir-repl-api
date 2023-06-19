@@ -8,9 +8,9 @@ class ShellOperations:
 
     @staticmethod
     def _run_command(command, cwd):
-        # command = command.split()
+        command = command.split()
         process = subprocess.run(
-            command, capture_output=True, cwd=cwd, check=False, shell=True
+            command, capture_output=True, cwd=cwd, check=False
         )
 
         return process.returncode, process.stdout, process.stderr

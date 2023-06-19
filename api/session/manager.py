@@ -34,7 +34,11 @@ class SessionManager:
             return session_identifier, example["code"], example["inputs"]
 
         except Exception as exp:
+            print("Start of Exp")
+            print(exp)
+            print("End of Exp")
             raise Exception(exp)
+
 
     def get_session(self, identifier):
         session_dir = glob(f"{self.sessions_dir}/{identifier}__*")[0]
