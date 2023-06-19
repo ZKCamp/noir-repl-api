@@ -133,12 +133,3 @@ async def get_session_info(session_id: str):
         "inputs": inputs
     }
 
-
-@app.get("/test")
-async def test():
-    output, ret_code = session_manager.test_execution()
-
-    return {
-        "op": output,
-        "ret_code": ret_code
-    }

@@ -26,14 +26,6 @@ class ShellOperations:
         assert (ret_code == 0)
         return output
 
-    def temp_initialise_noir_project(self, project_name, directory):
-        command = f"nargo new {project_name}"
-        ret_code, output, _ = self._run_command(
-            command, cwd=directory
-        )
-
-        return output, ret_code
-
     def compile_code(self, project_directory):
         command = f"nargo check"
         ret_code, output, error = self._run_command(

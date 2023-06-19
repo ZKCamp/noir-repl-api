@@ -34,11 +34,7 @@ class SessionManager:
             return session_identifier, example["code"], example["inputs"]
 
         except Exception as exp:
-            print("Start of Exp")
-            print(exp)
-            print("End of Exp")
             raise Exception(exp)
-
 
     def get_session(self, identifier):
         session_dir = glob(f"{self.sessions_dir}/{identifier}__*")[0]
@@ -104,13 +100,4 @@ class SessionManager:
 
         return code, inputs
 
-    def test_execution(self):
-        session_identifier = uuid.uuid1()
-        session_dir_name = f"{session_identifier}__hello"
-        session_directory = os.path.join(self.sessions_dir, session_dir_name)
-
-        os.mkdir(session_directory)
-
-        output, ret_code = self.shell_ops.temp_initialise_noir_project("temp", session_directory)
-        return output, ret_code
 
