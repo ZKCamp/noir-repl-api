@@ -1,5 +1,5 @@
 .idea/
 venv/
-data/sessions
+data/sessions/**/
 **/__pycache__/
 
