@@ -1,22 +1,24 @@
 import os
 import subprocess
+import os
 
 
 class ShellOperations:
     def __init__(self):
-        pass
+        self.env = os.environ.copy()
+        custom_path = '/root/.nargo/bin'
+        self.env['PATH'] += os.pathsep + custom_path
 
-    @staticmethod
-    def _run_command(command, cwd):
+    def _run_command(self, command, cwd):
         command = command.split()
         process = subprocess.run(
-            command, capture_output=True, cwd=cwd, check=False
+            command, capture_output=True, cwd=cwd, check=False, env=self.env
         )
 
         return process.returncode, process.stdout, process.stderr
 
     def initialise_noir_project(self, project_name, directory):
-        command = f"/root/.nargo/bin/nargo new {project_name}"
+        command = f"nargo new {project_name}"
         ret_code, output, _ = self._run_command(
             command, cwd=directory
         )
@@ -25,7 +27,7 @@ class ShellOperations:
         return output
 
     def temp_initialise_noir_project(self, project_name, directory):
-        command = f"/root/.nargo/bin/nargo new {project_name}"
+        command = f"nargo new {project_name}"
         ret_code, output, _ = self._run_command(
             command, cwd=directory
         )
