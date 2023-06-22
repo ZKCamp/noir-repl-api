@@ -59,3 +59,10 @@ class ShellOperations:
         )
 
         return ret_code, error
+
+    def gates(self, project_directory):
+        command = f"nargo gates"
+        ret_code, output, error = self._run_command(
+            command, cwd=project_directory
+        )
+        return ret_code, output, error

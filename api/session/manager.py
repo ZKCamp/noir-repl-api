@@ -103,4 +103,11 @@ class SessionManager:
 
         return code, inputs
 
+    def get_session_gates(self, identifier):
+        project_name, session_dir, project_dir = self.get_session(identifier)
+        ret_code, output, error = self.shell_ops.gates(project_dir)
 
+        if error:
+            return error
+        else:
+            return output

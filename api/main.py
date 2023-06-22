@@ -133,3 +133,14 @@ async def get_session_info(session_id: str):
         "inputs": inputs
     }
 
+
+@app.post("/session/gates")
+async def gates(run_input: RunInput):
+    session_manager.replace_code(run_input.session_id, run_input.code)
+    session_manager.replace_inputs(run_input.session_id, run_input.inputs)
+
+    output = session_manager.get_session_gates(run_input.session_id)
+
+    return {
+        "output": output
+    }
