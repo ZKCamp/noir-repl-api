@@ -66,3 +66,10 @@ class ShellOperations:
             command, cwd=project_directory
         )
         return ret_code, output, error
+
+    def test(self, project_directory):
+        command = f"nargo test"
+        ret_code, output, error = self._run_command(
+            command, cwd=project_directory
+        )
+        return ret_code, output, error

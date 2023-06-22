@@ -111,3 +111,15 @@ class SessionManager:
             return error
         else:
             return output
+
+    def run_tests(self, identifier):
+        project_name, session_dir, project_dir = self.get_session(identifier)
+        ret_code, output, error = self.shell_ops.test(project_dir)
+
+        output = clean_output(output.decode("utf-8"))
+        error = clean_output(error.decode("utf-8"))
+
+        if error:
+            return error
+        else:
+            return output
