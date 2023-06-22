@@ -44,7 +44,7 @@ class ShellOperations:
         return output
 
     def prove(self, directory):
-        command = f"nargo prove p"
+        command = f"nargo execute"
 
         ret_code, output, error = self._run_command(
             command, cwd=directory
